@@ -2,7 +2,7 @@
   "name": "ms-auth",
   "version": "1.0.0",
   "description": "Vuejs Authentication & Authorization",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "files": [
     "lib/"
   ],
