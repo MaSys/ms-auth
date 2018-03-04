@@ -7,5 +7,9 @@
     "test": "test"
   },
   "author": "Yaser Almasri <yaser@masys.co>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.5"
+  }
 }
