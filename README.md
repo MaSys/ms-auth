@@ -10,7 +10,7 @@ Vue.use(Auth)
 const auth = new Auth({
   ssKey: 'ms-manager-v', // storage key.
   token: 'auth_token', // access token key name as it's stored in storage.
-  authorizationStr: 'Token token={{auth_token}};email={{email}}' // Authorization header string, key are as they are stored in storage.
+  authorizationStr: 'Token token={{token}};email={{email}}' // Authorization header string, key are as they are stored in storage.
 })
 
 // override the function to get current user info
