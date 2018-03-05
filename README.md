@@ -24,11 +24,16 @@ auth.getCurrentUser = () => {
 }
 
 // get your acls from the DB and set them into auth class.
-axios.defaults.headers.common['Authorization'] = auth.accessToken
-axios.get(process.env.API_URL + '/acls')
-  .then(res => {
-    auth.rule('manage', 'all') // to manage all models and have access to everything.
-    auth.rule('Post', 'read') // give him access to read posts.
-  })
+auth.getAcls = () => {
+  axios.defaults.headers.common['Authorization'] = auth.accessToken
+  return axios.get(process.env.API_URL + '/acls')
+    .then(res => {
+      auth.rule('manage', 'all') // to manage all models and have access to everything.
+      auth.rule('Post', 'create') // give him access to read posts.
+      auth.rule('Post', 'read') // give him access to read posts.
+      auth.rule('Post', 'update') // give him access to read posts.
+      auth.rule('Post', 'destroy') // give him access to read posts.
+    })
+}
 
 ```
