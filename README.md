@@ -37,3 +37,13 @@ auth.getAcls = () => {
 }
 
 ```
+
+# Directive
+
+```html
+
+<router-link v-can:update="'Post'">
+  ...
+</router-link>
+
+```
