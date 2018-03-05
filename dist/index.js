@@ -84,6 +84,7 @@ var Auth = function () {
     value: function setStorage() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+      this.email = data.email;
       window[this.options.storage].setItem(this.options.ssKey, (0, _stringify2.default)(data));
     }
   }, {
