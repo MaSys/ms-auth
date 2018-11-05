@@ -92,7 +92,14 @@ var Auth = function () {
     value: function removeStorage() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-      Vue.util.defineReactive(this, 'currentUser', {});
+      Vue.delete(this, 'email');
+      Vue.delete(this, 'currentUser');
+      Vue.delete(this, 'acls');
+
+      Vue.util.defineReactive(this, 'email', null);
+      Vue.util.defineReactive(this, 'currentUser', { id: '', email: '' });
+      Vue.util.defineReactive(this, 'acls', {});
+
       window[this.options.storage].removeItem(this.options.ssKey);
     }
   }, {
@@ -154,8 +161,8 @@ var Auth = function () {
       this._vm.$set(this._vm.$auth, 'currentUser', data);
     }
   }, {
-    key: 'rule',
-    value: function rule(model, permission) {
+    key: 'addRule',
+    value: function addRule(model, permission) {
       if (!this.acls[model]) {
         this.acls[model] = [];
       }
@@ -163,6 +170,12 @@ var Auth = function () {
         return;
       }
       this.acls[model].push(permission);
+    }
+  }, {
+    key: 'rule',
+    value: function rule(model, permission) {
+      console.warn('Deprecated!!! Use addRule instead!');
+      this.addRule(model, permission);
     }
   }, {
     key: 'isAuthorized',
@@ -182,39 +195,44 @@ var Auth = function () {
                 throw Error('User not Logged in!');
 
               case 3:
+                console.log('logged');
+
                 if (!(this.currentUser.email === this.email)) {
-                  _context3.next = 5;
+                  _context3.next = 7;
                   break;
                 }
 
+                console.log('same email');
                 return _context3.abrupt('return', this.checkPermission(model, permission));
 
-              case 5:
-                _context3.next = 7;
+              case 7:
+                console.log('new email');
+
+                _context3.next = 10;
                 return this.getCurrentUser();
 
-              case 7:
-                _context3.next = 9;
+              case 10:
+                _context3.next = 12;
                 return this.getAcls();
 
-              case 9:
+              case 12:
                 this.checkPermission(model, permission);
-                _context3.next = 16;
+                _context3.next = 19;
                 break;
 
-              case 12:
-                _context3.prev = 12;
+              case 15:
+                _context3.prev = 15;
                 _context3.t0 = _context3['catch'](0);
 
                 console.log(_context3.t0);
                 throw _context3.t0;
 
-              case 16:
+              case 19:
               case 'end':
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 12]]);
+        }, _callee3, this, [[0, 15]]);
       }));
 
       function isAuthorized(_x7, _x8) {
@@ -235,6 +253,9 @@ var Auth = function () {
     value: function can(model, permission) {
       if (this.acls.manage) {
         if (this.acls.manage.indexOf('all') !== -1) {
+          return true;
+        }
+        if (this.acls.manage.indexOf(model) !== -1) {
           return true;
         }
       }
