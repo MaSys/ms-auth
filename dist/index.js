@@ -172,6 +172,18 @@ var Auth = function () {
       this.acls[model].push(permission);
     }
   }, {
+    key: 'removeRule',
+    value: function removeRule(model, permission) {
+      if (!this.acls[model]) {
+        return;
+      }
+      if (this.acls[model].indexOf(permission) === -1) {
+        return;
+      }
+      var index = this.acls[model].indexOf(permission);
+      this.acls[model].splice(index, 1);
+    }
+  }, {
     key: 'rule',
     value: function rule(model, permission) {
       console.warn('Deprecated!!! Use addRule instead!');
@@ -195,44 +207,39 @@ var Auth = function () {
                 throw Error('User not Logged in!');
 
               case 3:
-                console.log('logged');
-
                 if (!(this.currentUser.email === this.email)) {
-                  _context3.next = 7;
+                  _context3.next = 5;
                   break;
                 }
 
-                console.log('same email');
                 return _context3.abrupt('return', this.checkPermission(model, permission));
 
-              case 7:
-                console.log('new email');
-
-                _context3.next = 10;
+              case 5:
+                _context3.next = 7;
                 return this.getCurrentUser();
 
-              case 10:
-                _context3.next = 12;
+              case 7:
+                _context3.next = 9;
                 return this.getAcls();
 
-              case 12:
+              case 9:
                 this.checkPermission(model, permission);
-                _context3.next = 19;
+                _context3.next = 16;
                 break;
 
-              case 15:
-                _context3.prev = 15;
+              case 12:
+                _context3.prev = 12;
                 _context3.t0 = _context3['catch'](0);
 
                 console.log(_context3.t0);
                 throw _context3.t0;
 
-              case 19:
+              case 16:
               case 'end':
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[0, 15]]);
+        }, _callee3, this, [[0, 12]]);
       }));
 
       function isAuthorized(_x7, _x8) {
