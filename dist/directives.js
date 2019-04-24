@@ -12,26 +12,10 @@ exports.default = function (Vue) {
     var permission = binding.arg;
     var model = binding.value;
     var vm = vnode.context;
-    if (!vm.$auth.can(model, permission)) {
-      // replace HTMLElement with comment node
-      var comment = document.createComment(' ');
-      Object.defineProperty(comment, 'setAttribute', { value: function value() {
-          return undefined;
-        } });
-      vnode.elm = comment;
-      vnode.text = ' ';
-      vnode.isComment = true;
-      vnode.context = undefined;
-      vnode.tag = undefined;
-      vnode.data.directives = undefined;
-
-      if (vnode.componentInstance) {
-        vnode.componentInstance.$el = comment;
-      }
-
-      if (el.parentNode) {
-        el.parentNode.replaceChild(comment, el);
-      }
+    if (vm.$auth.can(model, permission)) {
+      el.style.visibility = 'visible';
+    } else {
+      el.style.visibility = 'none';
     }
   });
 };
