@@ -12,10 +12,11 @@ exports.default = function (Vue) {
     var permission = binding.arg;
     var model = binding.value;
     var vm = vnode.context;
+
     if (vm.$auth.can(model, permission)) {
-      el.style.visibility = 'visible';
+      el.removeAttribute('style');
     } else {
-      el.style.visibility = 'none';
+      el.style.display = 'none';
     }
   });
 };
