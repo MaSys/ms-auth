@@ -1,10 +1,11 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = _default;
 
-exports.default = function (Vue) {
+function _default(Vue) {
   /**
    * https://stackoverflow.com/a/43543814
    */
@@ -19,4 +20,4 @@ exports.default = function (Vue) {
       el.style.display = 'none';
     }
   });
-};
+}

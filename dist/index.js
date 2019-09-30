@@ -1,48 +1,27 @@
-'use strict';
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _regenerator = require('babel-runtime/regenerator');
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _stringify = require('babel-runtime/core-js/json/stringify');
+var _axios = _interopRequireDefault(require("axios"));
 
-var _stringify2 = _interopRequireDefault(_stringify);
+var _applyMixin = _interopRequireDefault(require("./apply-mixin"));
 
-var _assign = require('babel-runtime/core-js/object/assign');
+var _directives = _interopRequireDefault(require("./directives"));
 
-var _assign2 = _interopRequireDefault(_assign);
-
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = require('babel-runtime/helpers/createClass');
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _axios = require('axios');
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _applyMixin = require('./apply-mixin');
-
-var _applyMixin2 = _interopRequireDefault(_applyMixin);
-
-var _directives = require('./directives');
-
-var _directives2 = _interopRequireDefault(_directives);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Vue = void 0;
+var Vue;
 var defaultOptions = {
   ssKey: 'user',
   storage: 'localStorage',
@@ -57,13 +36,15 @@ function _install(_Vue) {
   }
 
   Vue = _Vue;
-  (0, _applyMixin2.default)(Vue);
-  (0, _directives2.default)(Vue);
+  (0, _applyMixin["default"])(Vue);
+  (0, _directives["default"])(Vue);
 }
 
-var Auth = function () {
-  (0, _createClass3.default)(Auth, null, [{
-    key: 'install',
+var Auth =
+/*#__PURE__*/
+function () {
+  (0, _createClass2["default"])(Auth, null, [{
+    key: "install",
     value: function install(_Vue) {
       _install(_Vue);
     }
@@ -71,131 +52,141 @@ var Auth = function () {
 
   function Auth() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    (0, _classCallCheck3.default)(this, Auth);
-
+    (0, _classCallCheck2["default"])(this, Auth);
     this._vm;
-    Vue.util.defineReactive(this, 'options', (0, _assign2.default)(defaultOptions, options));
-    Vue.util.defineReactive(this, 'currentUser', { id: '', email: '' });
+    Vue.util.defineReactive(this, 'options', Object.assign(defaultOptions, options));
+    Vue.util.defineReactive(this, 'currentUser', {
+      id: '',
+      email: ''
+    });
     Vue.util.defineReactive(this, 'acls', {});
   }
 
-  (0, _createClass3.default)(Auth, [{
-    key: 'setStorage',
+  (0, _createClass2["default"])(Auth, [{
+    key: "setStorage",
     value: function setStorage() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       this.email = data.email;
-      window[this.options.storage].setItem(this.options.ssKey, (0, _stringify2.default)(data));
+      window[this.options.storage].setItem(this.options.ssKey, JSON.stringify(data));
     }
   }, {
-    key: 'removeStorage',
+    key: "removeStorage",
     value: function removeStorage() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       this.setCurrentUser();
-
-      Vue.delete(this, 'email');
-      Vue.delete(this, 'currentUser');
-      Vue.delete(this, 'acls');
-
+      Vue["delete"](this, 'email');
+      Vue["delete"](this, 'currentUser');
+      Vue["delete"](this, 'acls');
       Vue.util.defineReactive(this, 'email', null);
-      Vue.util.defineReactive(this, 'currentUser', { id: '', email: '' });
+      Vue.util.defineReactive(this, 'currentUser', {
+        id: '',
+        email: ''
+      });
       Vue.util.defineReactive(this, 'acls', {});
-
       window[this.options.storage].removeItem(this.options.ssKey);
     }
   }, {
-    key: 'getCurrentUser',
+    key: "getCurrentUser",
     value: function () {
-      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(cb) {
-        return _regenerator2.default.wrap(function _callee$(_context) {
+      var _getCurrentUser = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee(cb) {
+        return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 console.error('[getCurrentUser] function should be overwritten.');
-                return _context.abrupt('return');
+                return _context.abrupt("return");
 
               case 2:
-              case 'end':
+              case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
-      function getCurrentUser(_x4) {
-        return _ref.apply(this, arguments);
+      function getCurrentUser(_x) {
+        return _getCurrentUser.apply(this, arguments);
       }
 
       return getCurrentUser;
     }()
   }, {
-    key: 'getAcls',
+    key: "getAcls",
     value: function () {
-      var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(cb) {
-        return _regenerator2.default.wrap(function _callee2$(_context2) {
+      var _getAcls = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee2(cb) {
+        return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 console.error('[getAcls] function should be overwritten.');
-                return _context2.abrupt('return');
+                return _context2.abrupt("return");
 
               case 2:
-              case 'end':
+              case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee2);
       }));
 
-      function getAcls(_x5) {
-        return _ref2.apply(this, arguments);
+      function getAcls(_x2) {
+        return _getAcls.apply(this, arguments);
       }
 
       return getAcls;
     }()
   }, {
-    key: 'setCurrentUser',
+    key: "setCurrentUser",
     value: function setCurrentUser() {
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
       this.email = data.email;
+
       this._vm.$set(this._vm.$auth, 'currentUser', data);
     }
   }, {
-    key: 'addRule',
+    key: "addRule",
     value: function addRule(model, permission) {
       if (!this.acls[model]) {
         this.acls[model] = [];
       }
+
       if (this.acls[model].indexOf(permission) !== -1) {
         return;
       }
+
       this.acls[model].push(permission);
     }
   }, {
-    key: 'removeRule',
+    key: "removeRule",
     value: function removeRule(model, permission) {
       if (!this.acls[model]) {
         return;
       }
+
       if (this.acls[model].indexOf(permission) === -1) {
         return;
       }
+
       var index = this.acls[model].indexOf(permission);
       this.acls[model].splice(index, 1);
     }
   }, {
-    key: 'rule',
+    key: "rule",
     value: function rule(model, permission) {
       console.warn('Deprecated!!! Use addRule instead!');
       this.addRule(model, permission);
     }
   }, {
-    key: 'isAuthorized',
+    key: "isAuthorized",
     value: function () {
-      var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(model, permission) {
-        return _regenerator2.default.wrap(function _callee3$(_context3) {
+      var _isAuthorized = (0, _asyncToGenerator2["default"])(
+      /*#__PURE__*/
+      _regenerator["default"].mark(function _callee3(model, permission) {
+        return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
@@ -214,7 +205,7 @@ var Auth = function () {
                   break;
                 }
 
-                return _context3.abrupt('return', this.checkPermission(model, permission));
+                return _context3.abrupt("return", this.checkPermission(model, permission));
 
               case 5:
                 _context3.next = 7;
@@ -231,86 +222,95 @@ var Auth = function () {
 
               case 12:
                 _context3.prev = 12;
-                _context3.t0 = _context3['catch'](0);
-
+                _context3.t0 = _context3["catch"](0);
                 console.log(_context3.t0);
                 throw _context3.t0;
 
               case 16:
-              case 'end':
+              case "end":
                 return _context3.stop();
             }
           }
         }, _callee3, this, [[0, 12]]);
       }));
 
-      function isAuthorized(_x7, _x8) {
-        return _ref3.apply(this, arguments);
+      function isAuthorized(_x3, _x4) {
+        return _isAuthorized.apply(this, arguments);
       }
 
       return isAuthorized;
     }()
   }, {
-    key: 'checkPermission',
+    key: "checkPermission",
     value: function checkPermission(model, permission) {
       if (!this.can(model, permission)) {
         throw Error('Unauthorized!');
       }
     }
   }, {
-    key: 'can',
+    key: "can",
     value: function can(model, permission) {
       if (this.acls.manage) {
         if (this.acls.manage.indexOf('all') !== -1) {
           return true;
         }
+
         if (this.acls.manage.indexOf(model) !== -1) {
           return true;
         }
       }
+
       if (!this.acls[model]) {
         return false;
       }
+
       var index = this.acls[model].indexOf(permission);
+
       if (index === -1) {
         return false;
       }
+
       return true;
     }
   }, {
-    key: 'isLoggedIn',
+    key: "isLoggedIn",
     get: function get() {
       var storageItem = window[this.options.storage].getItem(this.options.ssKey);
+
       if (!storageItem) {
         return false;
       }
+
       var data = JSON.parse(storageItem);
       return !!data && !!data[this.options.token];
     }
   }, {
-    key: 'accessToken',
+    key: "accessToken",
     get: function get() {
       var str = this.options.authorizationStr;
       var storageItem = window[this.options.storage].getItem(this.options.ssKey);
+
       if (!storageItem) {
         return '';
       }
+
       var data = JSON.parse(storageItem);
+
       for (var key in data) {
         str = str.replace('{{' + key + '}}', data[key]);
       }
+
       str = str.replace('{{' + this.options.token + '}}', data[this.options.token]);
       return str;
     }
   }]);
   return Auth;
-}();
-
-// auto install in dist mode
+}(); // auto install in dist mode
 
 
 if (typeof window !== 'undefined' && window.Vue) {
   _install(window.Vue);
 }
 
-exports.default = Auth;
+var _default = Auth;
+exports["default"] = _default;
