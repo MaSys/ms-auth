@@ -40,9 +40,7 @@ function _install(_Vue) {
   (0, _directives["default"])(Vue);
 }
 
-var Auth =
-/*#__PURE__*/
-function () {
+var Auth = /*#__PURE__*/function () {
   (0, _createClass2["default"])(Auth, null, [{
     key: "install",
     value: function install(_Vue) {
@@ -88,9 +86,7 @@ function () {
   }, {
     key: "getCurrentUser",
     value: function () {
-      var _getCurrentUser = (0, _asyncToGenerator2["default"])(
-      /*#__PURE__*/
-      _regenerator["default"].mark(function _callee(cb) {
+      var _getCurrentUser = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(cb) {
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -115,9 +111,7 @@ function () {
   }, {
     key: "getAcls",
     value: function () {
-      var _getAcls = (0, _asyncToGenerator2["default"])(
-      /*#__PURE__*/
-      _regenerator["default"].mark(function _callee2(cb) {
+      var _getAcls = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(cb) {
         return _regenerator["default"].wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -183,9 +177,7 @@ function () {
   }, {
     key: "isAuthorized",
     value: function () {
-      var _isAuthorized = (0, _asyncToGenerator2["default"])(
-      /*#__PURE__*/
-      _regenerator["default"].mark(function _callee3(model, permission) {
+      var _isAuthorized = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(model, permission) {
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
