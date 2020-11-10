@@ -1,6 +1,6 @@
 {
   "name": "ms-auth",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "Vuejs Authentication & Authorization",
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "babel lib --out-dir dist",
-    "test": "test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,6 @@
     "axios": "^0.18.0"
   },
   "devDependencies": {
-    "minimist": ">=0.2.1",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -43,6 +42,8 @@
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/runtime": "^7.9.6",
-    "babel-register": "^6.26.0"
+    "babel-register": "^6.26.0",
+    "minimist": ">=0.2.1",
+    "mocha": "^8.2.1"
   }
 }
