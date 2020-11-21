@@ -13,10 +13,20 @@ var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/creat
 var Auth = /*#__PURE__*/function () {
   function Auth() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var app = arguments.length > 1 ? arguments[1] : undefined;
     (0, _classCallCheck2["default"])(this, Auth);
-    this.options = options;
-    this.currentUser = null;
-    this.acls = {};
+    this.app = app;
+    this.currentUser = this.app.observable(null);
+    Object.defineProperty(this, 'options', {
+      enumerable: false,
+      writable: true,
+      value: options
+    });
+    Object.defineProperty(this, 'acls', {
+      enumerable: false,
+      writable: true,
+      value: {}
+    });
   }
 
   (0, _createClass2["default"])(Auth, [{
@@ -52,6 +62,11 @@ var Auth = /*#__PURE__*/function () {
       this.acls[model].splice(index, 1);
     }
   }, {
+    key: "logout",
+    value: function logout() {
+      this.currentUser = this.app.observable(null);
+    }
+  }, {
     key: "isAuthorized",
     value: function () {
       var _isAuthorized = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(model, permission) {
@@ -66,11 +81,11 @@ var Auth = /*#__PURE__*/function () {
                 }
 
                 _context.next = 3;
-                return this.options.getCurrentUser();
+                return this.options.getCurrentUser(this);
 
               case 3:
                 user = _context.sent;
-                this.currentUser = user;
+                this.currentUser = this.app.observable(user);
 
               case 5:
                 if (!this.options.prepareAcls) {

@@ -9,7 +9,8 @@ Vuejs Authorization
 import auth from 'ms-auth'
 
 const options = {
-  redirectRouteName: 'Home', // route to be redirected when unauthorized
+  homeRoute: 'home', // route to be redirected when unauthorized
+  loginRoute: 'login', // route to be redirected when unauthenticated
   router, // VueRouter instance
   async getCurrentUser () {
     // Fetch user in session information
@@ -19,6 +20,9 @@ const options = {
     // Do your magic here and give the user the rules to access resources.
     auth.addRule('User', 'read')
     auth.addRule('User', 'create')
+  },
+  async onUnauthorized (auth) {
+    auth.logout()
   }
 }
 

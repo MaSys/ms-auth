@@ -15,14 +15,14 @@ var _auth = _interopRequireDefault(require("./auth"));
 
 var _default = {
   install: function install(app, options) {
-    var auth = new _auth["default"](options);
+    var auth = new _auth["default"](options, app);
 
     if (app.config.globalProperties) {
       app.config.globalProperties.$auth = auth;
     } else if (typeof app === 'function') {
       Object.defineProperty(app.prototype, '$auth', {
         get: function get() {
-          return auth;
+          return app.observable(auth);
         }
       });
     }
@@ -37,44 +37,66 @@ var _default = {
                   if (!to.matched.some(function (record) {
                     return record.meta.requiresAuth;
                   })) {
-                    _context.next = 12;
+                    _context.next = 20;
                     break;
                   }
 
-                  _context.prev = 1;
-                  _context.next = 4;
-                  return auth.isAuthorized(to.meta.model, to.meta.permission);
-
-                case 4:
-                  next();
-                  _context.next = 10;
-                  break;
-
-                case 7:
-                  _context.prev = 7;
-                  _context.t0 = _context["catch"](1);
-
-                  if (to.name === options.redirectRouteName) {
-                    next();
-                  } else {
-                    next({
-                      name: options.redirectRouteName
-                    });
+                  if (!to.meta.auth) {
+                    _context.next = 18;
+                    break;
                   }
 
-                case 10:
-                  _context.next = 13;
+                  _context.prev = 2;
+                  _context.next = 5;
+                  return auth.isAuthorized(to.meta.auth.model, to.meta.auth.permission);
+
+                case 5:
+                  next();
+                  _context.next = 18;
                   break;
 
-                case 12:
+                case 8:
+                  _context.prev = 8;
+                  _context.t0 = _context["catch"](2);
+
+                  if (!(to.name === options.homeRoute)) {
+                    _context.next = 17;
+                    break;
+                  }
+
+                  if (!options.onUnauthorized) {
+                    _context.next = 14;
+                    break;
+                  }
+
+                  _context.next = 14;
+                  return options.onUnauthorized(auth);
+
+                case 14:
+                  next({
+                    name: options.loginRoute
+                  });
+                  _context.next = 18;
+                  break;
+
+                case 17:
+                  next({
+                    name: options.homeRoute
+                  });
+
+                case 18:
+                  _context.next = 21;
+                  break;
+
+                case 20:
                   next();
 
-                case 13:
+                case 21:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[1, 7]]);
+          }, _callee, null, [[2, 8]]);
         }));
 
         return function (_x, _x2, _x3) {
