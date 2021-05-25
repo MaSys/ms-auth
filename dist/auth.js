@@ -67,9 +67,9 @@ var Auth = /*#__PURE__*/function () {
       this.currentUser = this.app.observable(null);
     }
   }, {
-    key: "isAuthorized",
+    key: "updateCurrentUser",
     value: function () {
-      var _isAuthorized = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(model, permission) {
+      var _updateCurrentUser = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
         var user;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
@@ -88,31 +88,66 @@ var Auth = /*#__PURE__*/function () {
                 this.currentUser = this.app.observable(user);
 
               case 5:
-                if (!this.options.prepareAcls) {
-                  _context.next = 8;
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function updateCurrentUser() {
+        return _updateCurrentUser.apply(this, arguments);
+      }
+
+      return updateCurrentUser;
+    }()
+  }, {
+    key: "isAuthorized",
+    value: function () {
+      var _isAuthorized = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(model, permission) {
+        var user;
+        return _regenerator["default"].wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!this.options.getCurrentUser) {
+                  _context2.next = 5;
                   break;
                 }
 
-                _context.next = 8;
+                _context2.next = 3;
+                return this.options.getCurrentUser(this);
+
+              case 3:
+                user = _context2.sent;
+                this.currentUser = this.app.observable(user);
+
+              case 5:
+                if (!this.options.prepareAcls) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _context2.next = 8;
                 return this.options.prepareAcls(this);
 
               case 8:
                 if (this.can(model, permission)) {
-                  _context.next = 10;
+                  _context2.next = 10;
                   break;
                 }
 
                 throw Error('Unauthorized!');
 
               case 10:
-                return _context.abrupt("return", true);
+                return _context2.abrupt("return", true);
 
               case 11:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function isAuthorized(_x, _x2) {
