@@ -21,7 +21,13 @@ describe('Auth', () => {
     it('adds rule to Auth', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('Post', 'create')
-      assert.equal(auth.acls.Post[0], 'create')
+      assert.equal(auth.acls.Post.create.length, 0)
+    })
+
+    it('adds rule with attributes', () => {
+      const auth = new Auth(undefined, app)
+      auth.addRule('Post', 'create', ['name'])
+      assert.equal(auth.acls.Post.create[0], 'name')
     })
   })
 
@@ -30,7 +36,7 @@ describe('Auth', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('Post', 'create')
       auth.removeRule('Post', 'create')
-      assert.equal(auth.acls.Post.length, 0)
+      assert.equal(auth.acls.Post.create, null)
     })
   })
 
@@ -48,25 +54,37 @@ describe('Auth', () => {
     it('returns true if has rule', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('Post', 'create')
-      assert.equal(auth.can('Post', 'create'), true)
+      assert.equal(auth.can('create', 'Post'), true)
     })
 
     it('returns true if manage all', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('manage', 'all')
-      assert.equal(auth.can('Post', 'create'), true)
+      assert.equal(auth.can('create', 'Post'), true)
     })
 
     it('returns true if manage model', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('manage', 'Post')
-      assert.equal(auth.can('Post', 'create'), true)
+      assert.equal(auth.can('create', 'Post'), true)
     })
 
     it('returns false if has no rule', () => {
       const auth = new Auth(undefined, app)
       auth.addRule('Post', 'create')
-      assert.equal(auth.can('Post', 'read'), false)
+      assert.equal(auth.can('read', 'Post'), false)
+    })
+
+    it('retruns true if attr exists', () => {
+      const auth = new Auth(undefined, app)
+      auth.addRule('Post', 'read', ['name'])
+      assert.equal(auth.can('read', 'Post', 'name'), true)
+    })
+
+    it('retruns false if attr does not exist', () => {
+      const auth = new Auth(undefined, app)
+      auth.addRule('Post', 'read')
+      assert.equal(auth.can('read', 'Post', 'name'), false)
     })
   })
 

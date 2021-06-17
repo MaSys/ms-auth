@@ -37,15 +37,13 @@ var Auth = /*#__PURE__*/function () {
   }, {
     key: "addRule",
     value: function addRule(model, permission) {
+      var attrs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
       if (!this.acls[model]) {
-        this.acls[model] = [];
+        this.acls[model] = {};
       }
 
-      if (this.acls[model].indexOf(permission) !== -1) {
-        return;
-      }
-
-      this.acls[model].push(permission);
+      this.acls[model][permission] = attrs;
     }
   }, {
     key: "removeRule",
@@ -54,12 +52,11 @@ var Auth = /*#__PURE__*/function () {
         return;
       }
 
-      if (this.acls[model].indexOf(permission) === -1) {
+      if (!this.acls[model][permission]) {
         return;
       }
 
-      var index = this.acls[model].indexOf(permission);
-      this.acls[model].splice(index, 1);
+      delete this.acls[model][permission];
     }
   }, {
     key: "logout",
@@ -132,7 +129,7 @@ var Auth = /*#__PURE__*/function () {
                 return this.options.prepareAcls(this);
 
               case 8:
-                if (this.can(model, permission)) {
+                if (this.can(permission, model)) {
                   _context2.next = 10;
                   break;
                 }
@@ -158,13 +155,13 @@ var Auth = /*#__PURE__*/function () {
     }()
   }, {
     key: "can",
-    value: function can(model, permission) {
+    value: function can(permission, model, attr) {
       if (this.acls.manage) {
-        if (this.acls.manage.indexOf('all') !== -1) {
+        if (!!this.acls.manage.all) {
           return true;
         }
 
-        if (this.acls.manage.indexOf(model) !== -1) {
+        if (!!this.acls.manage[model]) {
           return true;
         }
       }
@@ -173,13 +170,12 @@ var Auth = /*#__PURE__*/function () {
         return false;
       }
 
-      var index = this.acls[model].indexOf(permission);
-
-      if (index === -1) {
-        return false;
+      if (attr) {
+        var attrs = this.acls[model][permission];
+        return attrs.indexOf(attr) !== -1;
+      } else {
+        return !!this.acls[model][permission];
       }
-
-      return true;
     }
   }]);
   return Auth;

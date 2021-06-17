@@ -116,8 +116,9 @@ var _default = {
     var update = function update(el, binding, vnode) {
       var permission = binding.arg;
       var model = binding.value;
+      var arr = model.split('.');
 
-      if (auth.can(model, permission)) {
+      if (auth.can(permission, arr[0], arr[1])) {
         return;
       } // replace HTMLElement with comment node
 
