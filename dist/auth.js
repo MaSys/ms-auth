@@ -174,7 +174,7 @@ var Auth = /*#__PURE__*/function () {
         var attrs = this.acls[model][permission];
         return attrs.indexOf(attr) !== -1;
       } else {
-        return !!this.acls[model][permission];
+        return !!this.acls[model] && !!this.acls[model][permission];
       }
     }
   }]);
